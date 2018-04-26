@@ -1,6 +1,7 @@
-export default class Stage {
+import Entity from './entity';
+
+export default class Stage extends Entity {
   constructor() {
-    const _nullStage = { node: null };
-    this.node = _nullStage;
+    super();
   }
 }
