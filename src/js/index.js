@@ -1,37 +1,24 @@
-// HELPERS
-class goshDOM {
-  en(tagName, attrOptions) {
-    let defaults = {
-      id: '',
-      parent: '',
-    };
-    const options = Object.assign({}, defaults, attrOptions);
-    const newElement = document.createElement(tagName);
-    newElement.id = options['id'];
-    g.rab(options.parent)['id'].appendChild(newElement);
-    return newElement;
-  }
-  rab(element) {
-    const elMatch = {
-      class: document.getElementsByClassName(element),
-      tag: document.getElementsByTagName(element),
-      id: document.getElementById(element),
-    };
-    return elMatch
-  }
+import { g } from '../goshDOMIt';
+import Player from './player';
+import Stage from './stage';
+import Entity from './entity';
 
-}
-var g = new goshDOM()
+require('../scss/style.scss');
 
-// var root = document.getElementById('root');
-var root = g.rab('root')['id'];
+const root = g.rab('root')['id'];
+const stageOptions = {
+                      parent: 'root',
+                      id: 'stage',
 
-function stageInit() {
-  const stageOptions = {
-    id: 'stage',
-    parent: 'root'
-  };
-  const stage = g.en('div', stageOptions);
-}
-
-stageInit();
+                      };
+const entityOptions = {
+                      parent: 'stage',
+                      id: 'entity',
+                      };
+const playerOptions = {
+                      parent: 'stage',
+                      id: 'player',
+                      };
+const stage  = g.en(Stage, stageOptions);
+const entity = g.en(Entity, entityOptions);
+const player = g.en(Player, playerOptions);
