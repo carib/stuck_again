@@ -5,29 +5,32 @@ export default class MovingEntity extends Entity {
     super();
     this.speed = 10;
     g(document.body).on('keydown', (e) => this.keyDown(e.keyCode));
+    this.move = this.move.bind(this);
+  }
+
+  render() {
+    this.updatePos();
   }
 
   updatePos() {
     const { left, top } = this.position;
     this.gD.moveTo(left, top);
+    this.updateXY();
   }
 
   move(direction) {
-    switch (direction) {
-      case 'UP':
-        for (let i = 0; i < this.speed; i++) this.position.top--
-        break;
-      case 'DOWN':
-        for (let i = 0; i < this.speed; i++) this.position.top++
-        break;
-      case 'LEFT':
-        for (let i = 0; i < this.speed; i++) this.position.left--
-        break;
-      case 'RIGHT':
-        for (let i = 0; i < this.speed; i++) this.position.left++
-        break;
-      default:
-        console.log("Can't move that way.");
+    let { speed, position, id } = this;
+    let dir = direction;
+    if (!'UP DOWN LEFT RIGHT'.includes(dir)) {
+      (/player/.test(id)) ? console.log("Can't move that way.") : null;
+    }
+    for (let i = 0; i < speed; i++) {
+      if (/UP/.test(dir)) position.top--
+      if (/DOWN/.test(dir)) position.top++
+      if (/LEFT/.test(dir)) position.left--
+      if (/RIGHT/.test(dir)) position.left++
     }
   }
+
+
 }

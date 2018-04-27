@@ -3,10 +3,11 @@ export default class Entity {
     this.gD = null;
     this.position = {};
     this.positionEntity = this.positionEntity.bind(this);
+    this.parseKeyCode = this.parseKeyCode.bind(this);
   }
 
   init(options) {
-    if (!/stage-/.test(this.id)) this.positionEntity(options.initXY);
+    this.positionEntity(options);
   }
 
   keyDown(keyCode) {
@@ -14,22 +15,35 @@ export default class Entity {
   }
 
   parseKeyCode(keyCode) {
-    const parsed = g.etKey(keyCode);
-    const relay = { null: console.log(parsed.dir),
-                    move: this.move(parsed.dir), };
-    relay[parsed.act];
+    const { id, act, dir } = g.etKey(keyCode, this.id.split('-')[0]);
+    const relay = {
+      [id]: { _nullKey: null },
+      player: {
+        move: this.move(dir),
+      },
+    };
+    relay[id][act];
   }
 
-  positionEntity(initXY) {
-    initXY               = initXY.split(',').map(n => parseInt(n));
-    this.position.x      = this.node.getBoundingClientRect().x;
-    this.position.y      = this.node.getBoundingClientRect().y;
-    this.position.height = this.node.getBoundingClientRect().height;
-    this.position.width  = this.node.getBoundingClientRect().width;
-    this.position.top    = initXY[1]
-    this.position.left   = initXY[0]
-    this.position.right  = this.node.getBoundingClientRect().right;
-    this.position.bottom = this.node.getBoundingClientRect().bottom;
+  positionEntity({ initXY }) {
+    const { position, node } = this;
+    initXY          = initXY.split(',').map(n => parseInt(n));
+    position.top    = initXY[1]
+    position.left   = initXY[0]
+    position.width  = node.getBoundingClientRect().width;
+    position.height = node.getBoundingClientRect().height;
+    this.updateXY();
   }
 
+  updateXY() {
+    const { x, y }          = g.etOffset();
+    const { left, top,
+            height, width } = this.position;
+    this.position.x         = left - x;
+    this.position.y         = top - y;
+    this.position.x2        = left + width - x;
+    this.position.y2        = top + height - y;
+    this.position.halfW     = width / 2;
+    this.position.halfH     = height / 2
+  }
 }

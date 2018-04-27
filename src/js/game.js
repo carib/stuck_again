@@ -1,5 +1,5 @@
 // import { g } from '../goshDOMIt';
-import { Stage, Entity, Player } from './index';
+import { Stage, NonPlayer, Player } from './index';
 
 export default class Game {
   constructor() {
@@ -11,45 +11,49 @@ export default class Game {
       parent: 'root',
       klass: 'stage',
     };
-    const entityOptions = {
+    const npcOptions = {
       parent: 'stage-0',
-      klass: 'entity',
-      speed: '10px',
+      klass: 'npc',
+      speed: 10,
       initXY: '200,20',
     };
     const playerOptions = {
       parent: 'stage-0',
       klass: 'player',
-      speed: '10px',
+      speed: 10,
       initXY: '200,50',
     };
     const keyBindings = {
-      87: 'move.UP',
-      68: 'move.RIGHT',
-      83: 'move.DOWN',
-      65: 'move.LEFT',
+      player: {
+        87: 'move.UP',
+        68: 'move.RIGHT',
+        83: 'move.DOWN',
+        65: 'move.LEFT',
+      },
     };
-    g.dBindKeys(keyBindings);
-    this.stage  = g.nr8(Stage, stageOptions);
-    this.entity = g.nr8(Entity, entityOptions);
-    this.player = g.nr8(Player, playerOptions);
+    g.lueKeys(keyBindings);
+    this.stage    = g.nr8(Stage, stageOptions);
+    this.player   = g.nr8(Player, playerOptions);
+    this.npc      = g.nr8(NonPlayer, npcOptions);
     window.stage  = this.stage;
-    window.entity = this.entity;
     window.player = this.player;
+    window.npc    = this.npc;
     this.loop();
   }
 
-  loop() {
+  loop(timestamp) {
+    let elapsed = timestamp - this.mark;
     this.update();
     this.render();
-    requestAnimationFrame(this.loop);
+    this.mark = timestamp;
+    this.req = window.requestAnimationFrame(this.loop);
   }
 
   update() {
-
   }
 
   render() {
     this.player.self.render();
+    this.npc.self.render();
   }
 }
