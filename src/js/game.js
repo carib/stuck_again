@@ -10,21 +10,18 @@ export default class Game {
     const stageOptions  = {
       parent: 'root',
       klass: 'stage',
-      id: 'stage',
     };
     const entityOptions = {
-      parent: 'stage',
+      parent: 'stage-0',
       klass: 'entity',
-      id: 'entity',
       speed: '10px',
-      initXY: '0,0',
+      initXY: '200,20',
     };
     const playerOptions = {
-      parent: 'stage',
+      parent: 'stage-0',
       klass: 'player',
-      id: 'player',
       speed: '10px',
-      initXY: '50,200',
+      initXY: '200,50',
     };
     const keyBindings = {
       87: 'move.UP',

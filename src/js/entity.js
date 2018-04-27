@@ -5,8 +5,8 @@ export default class Entity {
     this.positionEntity = this.positionEntity.bind(this);
   }
 
-  init() {
-    if (this.id !== 'stage') this.positionEntity(this.node);
+  init(options) {
+    if (!/stage-/.test(this.id)) this.positionEntity(options.initXY);
   }
 
   keyDown(keyCode) {
@@ -15,25 +15,21 @@ export default class Entity {
 
   parseKeyCode(keyCode) {
     const parsed = g.etKey(keyCode);
-    const relay = {
-      null: console.log(parsed.dir),
-      move: this.move(parsed.dir),
-    };
+    const relay = { null: console.log(parsed.dir),
+                    move: this.move(parsed.dir), };
     relay[parsed.act];
   }
 
-  positionEntity(node) {
-
-    this.position.x      = node.getBoundingClientRect().x;
-    this.position.y      = node.getBoundingClientRect().y;
-    this.position.height = node.getBoundingClientRect().height;
-    this.position.width  = node.getBoundingClientRect().width;
-    this.position.top    = node.getBoundingClientRect().top;
-    this.position.left   = node.getBoundingClientRect().left;
-    this.position.right  = node.getBoundingClientRect().right;
-    this.position.bottom = node.getBoundingClientRect().bottom;
-    // node.style.left = this.position.left + 'px';
-    // node.style.top = this.position.top + 'px'
+  positionEntity(initXY) {
+    initXY               = initXY.split(',').map(n => parseInt(n));
+    this.position.x      = this.node.getBoundingClientRect().x;
+    this.position.y      = this.node.getBoundingClientRect().y;
+    this.position.height = this.node.getBoundingClientRect().height;
+    this.position.width  = this.node.getBoundingClientRect().width;
+    this.position.top    = initXY[1]
+    this.position.left   = initXY[0]
+    this.position.right  = this.node.getBoundingClientRect().right;
+    this.position.bottom = this.node.getBoundingClientRect().bottom;
   }
 
 }
