@@ -6,7 +6,7 @@ export default class Entity {
   }
 
   init() {
-    this.positionEntity(this.node)
+    if (this.id !== 'stage') this.positionEntity(this.node);
   }
 
   keyDown(keyCode) {
@@ -23,6 +23,7 @@ export default class Entity {
   }
 
   positionEntity(node) {
+
     this.position.x      = node.getBoundingClientRect().x;
     this.position.y      = node.getBoundingClientRect().y;
     this.position.height = node.getBoundingClientRect().height;
@@ -31,6 +32,8 @@ export default class Entity {
     this.position.left   = node.getBoundingClientRect().left;
     this.position.right  = node.getBoundingClientRect().right;
     this.position.bottom = node.getBoundingClientRect().bottom;
+    // node.style.left = this.position.left + 'px';
+    // node.style.top = this.position.top + 'px'
   }
 
 }

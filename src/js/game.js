@@ -17,12 +17,14 @@ export default class Game {
       klass: 'entity',
       id: 'entity',
       speed: '10px',
+      initXY: '0,0',
     };
     const playerOptions = {
       parent: 'stage',
       klass: 'player',
       id: 'player',
       speed: '10px',
+      initXY: '50,200',
     };
     const keyBindings = {
       87: 'move.UP',
