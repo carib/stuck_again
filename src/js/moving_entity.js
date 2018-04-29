@@ -3,9 +3,14 @@ import Entity from './entity';
 export default class MovingEntity extends Entity {
   constructor() {
     super();
-    this.speed = 10;
     g(document.body).on('keydown', (e) => this.keyDown(e.keyCode));
     this.move = this.move.bind(this);
+  }
+
+  assignVariables(options) {
+    const { speed } = options;
+    this.position   = {};
+    this.speed      = speed;
   }
 
   render() {

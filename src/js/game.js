@@ -1,5 +1,5 @@
-// import { g } from '../goshDOMIt';
-import { Stage, NonPlayer, Player } from './index';
+// import { Stage, NonPlayer, Player } from './index';
+import * as Options from './options';
 
 export default class Game {
   constructor() {
@@ -7,53 +7,41 @@ export default class Game {
   }
 
   init() {
-    const stageOptions  = {
-      parent: 'root',
-      klass: 'stage',
-    };
-    const npcOptions = {
-      parent: 'stage-0',
-      klass: 'npc',
-      speed: 10,
-      initXY: '200,20',
-    };
-    const playerOptions = {
-      parent: 'stage-0',
-      klass: 'player',
-      speed: 10,
-      initXY: '200,50',
-    };
-    const keyBindings = {
-      player: {
-        87: 'move.UP',
-        68: 'move.RIGHT',
-        83: 'move.DOWN',
-        65: 'move.LEFT',
-      },
-    };
-    g.lueKeys(keyBindings);
-    this.stage    = g.nr8(Stage, stageOptions);
-    this.player   = g.nr8(Player, playerOptions);
-    this.npc      = g.nr8(NonPlayer, npcOptions);
-    window.stage  = this.stage;
-    window.player = this.player;
-    window.npc    = this.npc;
+    // Generate entities
+    this.stage    = g.nr8(Options.stage);
+    this.player   = g.nr8(Options.player);
+    this.npc      = g.nr8(Options.npc);
+    // Configure game
+    g.lueKeys(Options.keyBindings);
+    g.ridMap(this.stage.self);
+    console.log(this.stage);
+    // Game start
+    this.devMode();
     this.loop();
+  }
+
+  devMode() {
+    if (Options.devMode) {
+      console.log('**********DEV MODE ENABLED**********');
+      window.npc    = this.npc;
+      window.stage  = this.stage;
+      window.player = this.player;
+    }
   }
 
   loop(timestamp) {
     let elapsed = timestamp - this.mark;
     this.update();
     this.render();
-    this.mark = timestamp;
-    this.req = window.requestAnimationFrame(this.loop);
-  }
-
-  update() {
+    this.mark   = timestamp;
+    this.req    = window.requestAnimationFrame(this.loop);
   }
 
   render() {
     this.player.self.render();
     this.npc.self.render();
+  }
+
+  update() {
   }
 }
