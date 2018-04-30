@@ -1,0 +1,61 @@
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+[id^="stage"] {
+  // width: 96%;
+  max-width: 532px;
+  height: 432px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #dadada;
+  border-bottom: none;
+  overflow: hidden;
+}
+
+#stage-1 {
+  width: 512px;
+}
+
+[id^="player"] {
+  z-index: 3;
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  border: 2px solid limegreen;
+  transition: all 300ms ease;
+  box-sizing: border-box;
+}
+
+[id^="npc"] {
+  z-index: 3;
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  border: 2px solid tomato;
+  transition: all 300ms ease;
+  box-sizing: border-box;
+}
+
+#stage-2 {
+  position: absolute;
+  border: none;
+  width: 512px;
+  left: 8px;
+  top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+[id^="y-"] {
+  height: 32px;
+  width: 32px;
+  border-right: 1px solid #dadada;
+  border-bottom: 1px solid #dadada;
+  box-sizing: border-box;
+}

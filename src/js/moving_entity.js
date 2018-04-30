@@ -18,9 +18,12 @@ export default class MovingEntity extends Entity {
   }
 
   updatePos() {
-    const { left, top } = this.position;
-    this.gD.moveTo(left, top);
-    this.updateXY();
+    const offset = g.etOffset(this);
+    const { left, top, x, y} = this.position;
+    if ((x + offset.x) !== left || y + offset.y !== top) {
+      this.gD.moveTo(left, top);
+      this.updateXY();
+    }
   }
 
   move(direction) {
@@ -36,6 +39,4 @@ export default class MovingEntity extends Entity {
       if (/RIGHT/.test(dir)) position.left++
     }
   }
-
-
 }

@@ -1,5 +1,6 @@
 export default class Entity {
   constructor() {
+    this.occupiedCells = new Set();
     this.positionEntity = this.positionEntity.bind(this);
     this.parseKeyCode = this.parseKeyCode.bind(this);
   }
@@ -20,6 +21,7 @@ export default class Entity {
     position.left            = initXY[0]
     position.width           = node.getBoundingClientRect().width;
     position.height          = node.getBoundingClientRect().height;
+    this.gD.moveTo(position.left, position.top);
     this.updateXY();
   }
 
@@ -48,5 +50,10 @@ export default class Entity {
       },
     };
     relay[id][act];
+  }
+
+  mapOccupiedCells(entity = this) {
+    const cells = g.ridMap(entity.self);
+
   }
 }

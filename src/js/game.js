@@ -14,7 +14,8 @@ export default class Game {
     // Configure game
     g.lueKeys(Options.keyBindings);
     g.ridMap(this.stage.self);
-    console.log(this.stage);
+    g.ridMap(this.npc.self);
+    g.ridMap(this.player.self);
     // Game start
     this.devMode();
     this.loop();
@@ -26,6 +27,7 @@ export default class Game {
       window.npc    = this.npc;
       window.stage  = this.stage;
       window.player = this.player;
+      g.ridOverlay();
     }
   }
 
@@ -43,5 +45,6 @@ export default class Game {
   }
 
   update() {
+    // console.log(g.ridMap(this.player.self));
   }
 }
