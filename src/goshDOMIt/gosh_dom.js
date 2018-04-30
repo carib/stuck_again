@@ -122,13 +122,13 @@ g.etOffset = () => {
 }
 
 g.ridMap = (entitySelf) => {
-  if (!entitySelf) return _goshDOMStats['cellGrid'];
+  if (!entitySelf) return _goshDOMStats.cellGrid;
   const { id, position, node, cellSize } = entitySelf;
   const { x, y, x2, y2, width, height, halfW, halfH } = position;
   let cells = {};
   if (/stage/.test(id)) {
     cells = entitySelf.buildCellGrid();
-    cells = _goshDOMStats['cellGrid'] = g.lom(cells, _goshDOMStats);
+    cells = _goshDOMStats.cellGrid = g.lom(cells, _goshDOMStats);
   } else {
     let n = x2;
     let i = x2 - width;
@@ -148,30 +148,28 @@ g.ridMap = (entitySelf) => {
     let dx1 = (x2 - Math.floor(halfW/3)) > cx;
     let dy2 = (y  + Math.floor(halfH/3)) < cy;
     let dx2 = (x  + Math.floor(halfW/3)) < cx;
-    if (dy1 && dx1) cells.xy4  = `${cy},${cx}`;
-    if (dy2 && dx1) cells.xy3  = `${cy - height},${cx}`;
-    if (dy1 && dx2) cells.cxy2 = `${cy},${cx - width}`;
-    if (dy2 && dx2) cells.cxy1 = `${cy - height},${cx - width}`;
+    if (dy1 && dx1) cells.xy1  = `${cy},${cx}`;
+    if (dy2 && dx1) cells.xy2  = `${cy - height},${cx}`;
+    if (dy1 && dx2) cells.xy3  = `${cy},${cx - width}`;
+    if (dy2 && dx2) cells.xy4  = `${cy - height},${cx - width}`;
     delete cells.cy
     delete cells.cx
     Object.values(cells).forEach(cell => {
-      if (cell) _goshDOMStats.cellGrid[cell].add(id)
+      if (cell) _goshDOMStats.cellGrid[cell].add(id);
       entitySelf.occupiedCells.add(cell);
     });
+    console.log(entitySelf.occupiedCells);
   }
-  return _goshDOMStats['cellGrid'];
+  return _goshDOMStats.cellGrid;
 }
 
 g.ridOverlay = () => {
-  const cells = Object.keys(_goshDOMStats['cellGrid']);
+  let cells = Object.keys(_goshDOMStats.cellGrid);
   const grid  = g.nr8({ klass: 'stage' });
-  let cell;
-  let x;
-  let y;
   for (let i = 0; i < cells.length; i++) {
-    cell = cells[i].split(',');
-    x = cell[1];
-    y = cell[0];
+    let cell = cells[i].split(',');
+    let x = cell[1];
+    let y = cell[0];
     g.nr8({ parent: 'stage-2', id: `y-${y},x-${x}` });
   }
 }

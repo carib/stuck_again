@@ -5,10 +5,14 @@ html, body, #root {
   overflow: hidden;
 }
 
+#root {
+  height: 384px;
+}
+
 [id^="stage"] {
   // width: 96%;
   max-width: 532px;
-  height: 432px;
+  height: 400px;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -45,6 +49,7 @@ html, body, #root {
   position: absolute;
   border: none;
   width: 512px;
+  height: 384px;
   left: 8px;
   top: 8px;
   display: flex;
@@ -58,4 +63,11 @@ html, body, #root {
   border-right: 1px solid #dadada;
   border-bottom: 1px solid #dadada;
   box-sizing: border-box;
+}
+
+.glow {
+  z-index: 2a;
+  box-sizing: border-box;
+  border: 1px solid aquamarine;
+  transition: border 1as ease;
 }

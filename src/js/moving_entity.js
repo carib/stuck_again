@@ -5,6 +5,7 @@ export default class MovingEntity extends Entity {
     super();
     g(document.body).on('keydown', (e) => this.keyDown(e.keyCode));
     this.move = this.move.bind(this);
+    this.updatePos = this.updatePos
   }
 
   assignVariables(options) {
@@ -23,6 +24,7 @@ export default class MovingEntity extends Entity {
     if ((x + offset.x) !== left || y + offset.y !== top) {
       this.gD.moveTo(left, top);
       this.updateXY();
+      this.mapOccupiedCells();
     }
   }
 

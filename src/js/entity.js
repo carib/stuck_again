@@ -52,8 +52,23 @@ export default class Entity {
     relay[id][act];
   }
 
-  mapOccupiedCells(entity = this) {
-    const cells = g.ridMap(entity.self);
+  mapOccupiedCells() {
+    this.removeGlow();
+    this.occupiedCells.clear();
+    const cells = g.ridMap(this);
+    // cells.
+    this.addGlow()
+  }
 
+  removeGlow() {
+    Object.values(g.rab('glow').class).forEach(cell => cell.classList.remove('glow'))
+  }
+
+  addGlow() {
+    this.occupiedCells.forEach(cell => {
+      cell = cell.split(',');
+      cell = g.rab(`y-${cell[0]},x-${cell[1]}`).id;
+      cell.classList.add('glow');
+    });
   }
 }
